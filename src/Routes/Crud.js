@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../db');
+const pool = require('../db/connection');
 
 // Create 
 router.post('/', async (req, res) => {
   const { name } = req.body;
   try {
-    const result = await pool.query("INSERT INTO items (name) VALUES ($1) RETURNING *", [name]);
+    const result = await pool.query('INSERT INTO items (name) VALUES ($1) RETURNING *', [name]);
     res.status(201).json(result.rows[0]);
   } catch (error) {
-    res.status(500).json({ error: "Error creating an item." });
+    res.status(500).json({ error: 'Erro ao criar item.' });
   }
 });
 
